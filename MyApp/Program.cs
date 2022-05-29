@@ -69,6 +69,6 @@ for (int i = 0; i < cantEmpleados; i++){
     Console.WriteLine($"Edad: {edad}");
     int antiguedad = emp[i].calcularAntiguedad(emp[i].FechaIngreso);
     Console.WriteLine($"Antiguedad: {antiguedad}");
-    int falta = emp[i].calcularAñosAJubilarse(emp[i].Genero);
+    int falta = emp[i].calcularAniosAJubilarse(emp[i].Genero);
     Console.WriteLine($"Años que faltan para jubilarse: {falta}");
 }

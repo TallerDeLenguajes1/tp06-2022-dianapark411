@@ -56,7 +56,7 @@ public class Empleado{
         return antiguedad;
     }
 
-    public int calcularAñosAJubilarse(char genero){
+    public int calcularAniosAJubilarse(char genero){
         if(Char.ToLower(genero)=='f'){      //convierto a minuscula para que no haya errores si el usuario ingreso con mayusculas
             falta = 60 - edad;  //las mujeres se jubilan a los 60 años
         }else{
