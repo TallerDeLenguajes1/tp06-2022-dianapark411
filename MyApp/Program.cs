@@ -52,12 +52,7 @@ for (int i = 0; i < cantEmpleados; i++){
     }
 }
 
-DateTime fechaActual = DateTime.Today;
-
-
 for (int i = 0; i < cantEmpleados; i++){
-    
-    int edad = 0, falta = 0;;
 
     Console.WriteLine($"\n-----Datos del empleado {i+1}-----");
     Console.WriteLine($"Nombre: {emp[i].Nombre}");
@@ -70,22 +65,10 @@ for (int i = 0; i < cantEmpleados; i++){
     Console.WriteLine($"Sueldo: {emp[i].Sueldo}");
     Console.WriteLine($"Cargo: {emp[i].cargo}");
     
-    edad = fechaActual.Year - emp[i].FechaNacimiento.Year;
-    if(emp[i].FechaNacimiento.Month > fechaActual.Month){
-        edad = edad-1;
-    }
+    int edad = emp[i].calcularEdad(emp[i].FechaNacimiento);
     Console.WriteLine($"Edad: {edad}");
-
-    int antiguedad = fechaActual.Year - emp[i].FechaIngreso.Year;
-    if(emp[i].FechaIngreso.Month > fechaActual.Month){
-        antiguedad = antiguedad-1;
-    }
+    int antiguedad = emp[i].calcularAntiguedad(emp[i].FechaIngreso);
     Console.WriteLine($"Antiguedad: {antiguedad}");
-
-    if(Char.ToLower(emp[i].Genero) == 'f'){     //convierto a minuscula para que no haya errores si el usuario ingreso con mayusculas
-        falta = 60 - edad;  //las mujeres se jubilan a los 60 años
-    }else{
-        falta = 65 - edad;  //los varones se jubilan a los 65 años
-    }
+    int falta = emp[i].calcularAñosAJubilarse(emp[i].Genero);
     Console.WriteLine($"Años que faltan para jubilarse: {falta}");
 }
