@@ -39,6 +39,7 @@ public class Empleado{
 
     DateTime fechaActual = DateTime.Today;
     public int edad = 0, antiguedad  = 0, falta = 0;
+    public double salario = 0;
 
     public int calcularEdad(DateTime fechaNac){
         edad = fechaActual.Year - fechaNac.Year;
@@ -66,9 +67,26 @@ public class Empleado{
     }
     
 
-    public void calcularSalario(float sueldo, string cargo, char estadoCivil){
-        float salario  = 0 , adicional = 0;
+    public double calcularSalario(double sueldo, cargo cargo, char estadoCivil, int antiguedad){
+        double adicional = 0;
+
+        if(antiguedad < 20){
+            adicional = (antiguedad * 0.01) * sueldo;
+        }else{
+            adicional = 0.25 * sueldo;
+        }
+
+        if(cargo == cargo.Ingeniero || cargo == cargo.Especialista){
+            adicional = adicional * 1.50;
+        }
+
+        if(Char.ToLower(estadoCivil)=='c'){
+            adicional = adicional + 15000;
+        }
 
         salario = sueldo + adicional;
+
+        return salario;
     }
+
 }

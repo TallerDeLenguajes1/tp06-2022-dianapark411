@@ -8,6 +8,8 @@ Empleado[] emp = new Empleado[cantEmpleados];
 CultureInfo provider = CultureInfo.InvariantCulture;
 string format = "MM/dd/yyyy";
 
+double totalEnSalarios = 0;
+
 for (int i = 0; i < cantEmpleados; i++){
     emp[i] = new Empleado();
     Console.WriteLine($"\nIngrese los datos del empleado {i+1}");
@@ -50,11 +52,36 @@ for (int i = 0; i < cantEmpleados; i++){
         default:
             break;
     }
+    emp[i].edad = emp[i].calcularEdad(emp[i].FechaNacimiento);
+    
+    emp[i].antiguedad = emp[i].calcularAntiguedad(emp[i].FechaIngreso);
+    
+    emp[i].falta = emp[i].calcularAniosAJubilarse(emp[i].Genero);
+    
+    emp[i].salario = emp[i].calcularSalario(emp[i].Sueldo, emp[i].cargo, emp[i].EstadoCivil, emp[i].antiguedad);
+    
+    totalEnSalarios = totalEnSalarios + emp[i].salario;
 }
 
-for (int i = 0; i < cantEmpleados; i++){
 
-    Console.WriteLine($"\n-----Datos del empleado {i+1}-----");
+Console.WriteLine($" \n\nMonto total de lo que se paga en salarios: {totalEnSalarios}");
+
+int minimo = 100;
+int flag = 0;
+
+//Busco el empleado mas proximo a jubilarse
+for (int i = 0; i < cantEmpleados; i++){
+    if(emp[i].falta < minimo){
+        minimo = emp[i].falta;
+        //Como me interesa el indice hago un flag = i
+        flag = i;
+    }
+}
+Console.WriteLine($"\n----- Datos del empleado mas proximo a jubilarse -----");
+mostrarUnEmpleado(emp, flag);
+
+void mostrarUnEmpleado(Empleado[] emp,int i){
+    //Console.WriteLine($"\n-----Datos del empleado {i+1}-----");
     Console.WriteLine($"Nombre: {emp[i].Nombre}");
     Console.WriteLine($"Apellido: {emp[i].Apellido}");
     Console.WriteLine($"Fecha de nacimiento: {emp[i].FechaNacimiento.ToShortDateString()}"); 
@@ -64,11 +91,8 @@ for (int i = 0; i < cantEmpleados; i++){
     Console.WriteLine($"Fecha de ingreso en la empresa: {emp[i].FechaIngreso.ToShortDateString()}");
     Console.WriteLine($"Sueldo: {emp[i].Sueldo}");
     Console.WriteLine($"Cargo: {emp[i].cargo}");
-    
-    int edad = emp[i].calcularEdad(emp[i].FechaNacimiento);
-    Console.WriteLine($"Edad: {edad}");
-    int antiguedad = emp[i].calcularAntiguedad(emp[i].FechaIngreso);
-    Console.WriteLine($"Antiguedad: {antiguedad}");
-    int falta = emp[i].calcularAniosAJubilarse(emp[i].Genero);
-    Console.WriteLine($"Años que faltan para jubilarse: {falta}");
+    Console.WriteLine($"Edad: {emp[i].edad}");
+    Console.WriteLine($"Antiguedad: {emp[i].antiguedad}");
+    Console.WriteLine($"Años que faltan para jubilarse: {emp[i].falta}");
+    Console.WriteLine($"Salario con el adicional: {emp[i].salario}");
 }
